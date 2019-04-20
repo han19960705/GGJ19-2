@@ -65,12 +65,13 @@ public class Portal : MonoBehaviour {
         manager.player.SetPosition(t.targetWindow, pos.x, pos.y, pos.z);
         manager.player.SendPlayerMsg(t.targetWindow, t.targetPortalIdx);
         collider.gameObject.SetActive(false);
+        manager.LeavingPortal(t.targetPortalIdx);
     }
 
     Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
         Vector3 world_vector = v;
-        world_vector.x /= camera.pixelWidth / camera.aspect;
-        world_vector.y /= -camera.pixelHeight;
+        world_vector.x /= 0.5f * camera.pixelWidth / camera.aspect;
+        world_vector.y /= 0.5f * -camera.pixelHeight;
         world_vector *= camera.orthographicSize;
         return world_vector;
     }
