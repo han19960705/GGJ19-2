@@ -55,12 +55,16 @@ public class WindowManager : MonoBehaviour {
 
     public void SetPosition(int idx, float x, float y) {
         while (positions.Count <= idx) positions.Add(new Vector2());
-        positions[idx] = new Vector2(x, y);
+        Vector2 p = positions[idx];
+        p.x = x; p.y = y;
+        positions[idx] = p;
     }
 
     public void SetSize(int idx, float width, float height) {
         while (sizes.Count <= idx) sizes.Add(new Vector2());
-        sizes[idx] = new Vector2(width, height);
+        Vector2 s = sizes[idx];
+        s.x = width; s.y = height;
+        sizes[idx] = s;
     }
     
     void Start() {
@@ -81,7 +85,7 @@ public class WindowManager : MonoBehaviour {
             pos = pos,
             size = size
         };
-        network.client.Send(NSGMsgType.Window, msg);
+        network.Send(NSGMsgType.Window, msg);
     }
 
     void OnWindowMsg(WindowMessage msg) {
@@ -89,6 +93,7 @@ public class WindowManager : MonoBehaviour {
         SetSize(msg.connID, (int)msg.size.x, (int)msg.size.y);
     }
 
+    /* *
     void OnGUI() {
         int ypos = 0;
         for (int i = 0; i < positions.Count; i++) {
@@ -96,4 +101,5 @@ public class WindowManager : MonoBehaviour {
                 positions[i] + " " + sizes[i]);
         }
     }
+    /* */
 }
