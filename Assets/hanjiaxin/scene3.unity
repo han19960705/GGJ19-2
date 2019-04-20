@@ -294,6 +294,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Role
       objectReference: {fileID: 0}
+    - target: {fileID: 8374098609781113700, guid: 966c7623d6de0684981a71813efc5b27,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8374098609781113703, guid: 966c7623d6de0684981a71813efc5b27,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -742,15 +747,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.40322
       objectReference: {fileID: 0}
+    - target: {fileID: 8979232669229733601, guid: 6e5b8869a76f83842a3f478fd5828e9b,
+        type: 3}
+      propertyPath: orthographic size
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8979232669229733600, guid: 6e5b8869a76f83842a3f478fd5828e9b,
         type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1657745630}
-    - target: {fileID: 8979232669229733601, guid: 6e5b8869a76f83842a3f478fd5828e9b,
+    - target: {fileID: 8979232669229733600, guid: 6e5b8869a76f83842a3f478fd5828e9b,
         type: 3}
-      propertyPath: orthographic size
-      value: 9
+      propertyPath: verticleScrollThreshold
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979232669229733600, guid: 6e5b8869a76f83842a3f478fd5828e9b,
+        type: 3}
+      propertyPath: horizontalScrollThreshold
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5b8869a76f83842a3f478fd5828e9b, type: 3}
@@ -9806,6 +9821,7 @@ MonoBehaviour:
   cameras:
   - {fileID: 987572416}
   - {fileID: 39736176}
+  portals: {fileID: 1877392478}
 --- !u!4 &951938869
 Transform:
   m_ObjectHideFlags: 0
@@ -20439,6 +20455,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoleCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 8979232669229733612, guid: 6e5b8869a76f83842a3f478fd5828e9b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8979232669229733603, guid: 6e5b8869a76f83842a3f478fd5828e9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20494,16 +20515,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8979232669229733600, guid: 6e5b8869a76f83842a3f478fd5828e9b,
-        type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1574943150}
     - target: {fileID: 8979232669229733601, guid: 6e5b8869a76f83842a3f478fd5828e9b,
         type: 3}
       propertyPath: orthographic size
       value: 7.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8979232669229733600, guid: 6e5b8869a76f83842a3f478fd5828e9b,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1574943150}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5b8869a76f83842a3f478fd5828e9b, type: 3}
 --- !u!1 &1730462496
@@ -21956,6 +21977,8 @@ MonoBehaviour:
   window: {fileID: 277483371}
   player: {fileID: 951938868}
   textDebug: {fileID: 1614762586}
+  leeway: {x: 15, y: 15, z: 0}
+  portals: []
 --- !u!4 &1877392479
 Transform:
   m_ObjectHideFlags: 0
