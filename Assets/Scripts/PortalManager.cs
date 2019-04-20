@@ -21,7 +21,7 @@ public class PortalManager : MonoBehaviour {
         if (!inside) return null;
         Vector3 curExtents = p.GetHalfExtentsOnScreen(player.cameras[cur]);
 
-        //textDebug.text = curCenter + " " + curExtents;
+        textDebug.text = curCenter + " " + curExtents;
 
         for (int i = 0; i < window.positions.Count; i++) {
             if (i == cur) continue;
@@ -31,7 +31,7 @@ public class PortalManager : MonoBehaviour {
                 if (!inside) continue;
                 Vector3 extends = portal.GetHalfExtentsOnScreen(player.cameras[i]);
 
-                //Debug.Log(center + " " + extends);
+                Debug.Log(center + " " + extends);
 
                 if (CloseEnough(curCenter, curExtents, center, extends))
                     return portal;
