@@ -24,18 +24,16 @@ public class PlayerMove : MonoBehaviour
         prevPosX = this.transform.position.x;
         prevPosY = this.transform.position.y;
 
-        //
-
+        //运动
         float speed = setting.moveSetting.speed * Time.deltaTime;
-        float horizontal = Input.GetAxis("Horizontal");
+        int horizontal = (int)Input.GetAxis("Horizontal");
         
         isJump = Input.GetButtonDown("Jump");
 
         if (isJump && canJump)
         {
-            canJump = false;
             Debug.Log("here Jump");
-
+            canJump = false;
             animator.SetTrigger("Jump");
         }
 
@@ -65,8 +63,9 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        canJump = true;
         Debug.Log("here OnCollisionEnter");
+        canJump = true;
+        animator.SetTrigger("Landing");
     }
 
     //Animation Event
