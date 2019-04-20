@@ -8,70 +8,80 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] RoleSO setting;
 
     public Animator animator;
-    public Rigidbody2D rigidbody2D;
-    public float jumpSpeedInit = 1;
+    public new Rigidbody2D rigidbody2D;
 
-    bool isGrounded;
-    bool isJump = false;
     bool canJump = true;
-    float distanceBetweenTerrain;
+    bool isLanding = false;
+
+    float horizontal;
+
     float prevPosX;
     float prevPosY;
+    
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Ins.state != EGameState.GAMING)
+            return;
         //prev record
-        prevPosX = this.transform.position.x;
-        prevPosY = this.transform.position.y;
+        prevPosX = transform.position.x;
+        prevPosY = transform.position.y;
 
         //运动
         float speed = setting.moveSetting.speed * Time.deltaTime;
-        int horizontal = (int)Input.GetAxis("Horizontal");
+        horizontal = Input.GetAxis("Horizontal");
         
-        isJump = Input.GetButtonDown("Jump");
-
-        if (isJump && canJump)
+        if (Input.GetButtonDown("Jump") && canJump)
         {
             Debug.Log("here Jump");
             canJump = false;
+            isLanding = false;
+            animator.SetBool("IsLanding", false);
             animator.SetTrigger("Jump");
+
+            rigidbody2D.AddForce(new Vector2(0, setting.moveSetting.jumpForce), ForceMode2D.Impulse);
         }
 
         transform.Translate(horizontal * speed, 0, 0, Space.World);
 
         //转向
-        if (prevPosX > this.transform.position.x)
+        if (prevPosX > transform.position.x)
         {
             //Right
-            this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
         }
-        else if (prevPosX < this.transform.position.x)
+        else if (prevPosX < transform.position.x)
         {
             //Left
-            this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
         }
 
-        //动画管理
-        if (horizontal != 0)
+        //动画状态管理
+        if (horizontal != 0f)
         {
-            animator.SetTrigger("Move");
+            if (isLanding)
+            {
+                animator.SetBool("IsMoving", true);
+            }
         }
         else
         {
-            animator.SetTrigger("Idle");
+            animator.SetBool("IsMoving", false);
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("here OnCollisionEnter");
+        Debug.Log("here OnCollisionEnter with " + collision.transform.tag + " "+ collision.transform.name);
         canJump = true;
-        animator.SetTrigger("Landing");
+        isLanding = true;
+        animator.SetBool("IsLanding", true);
     }
 
     //Animation Event
-    public void JumpOver(string msg)
+    public void JumpOver()
     {
         animator.SetTrigger("JumpOver");
-        rigidbody2D.AddForce(new Vector2(0, setting.moveSetting.jumpForce), ForceMode2D.Impulse);
     }
+
 }
