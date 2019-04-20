@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class PortalManager : MonoBehaviour {
 
     public WindowManager window;
+    public PlayerManager player;
     Portal[] portals;
 
     public Text textDebug;
@@ -16,9 +17,9 @@ public class PortalManager : MonoBehaviour {
 
     public Portal GetConnectedPortal(Portal p) {
         int cur = window.network.connID;
-        bool inside = GetCenterOnScreen(cur, p, window.network.cameras[cur], out Vector3 curCenter);
+        bool inside = GetCenterOnScreen(cur, p, player.cameras[cur], out Vector3 curCenter);
         if (!inside) return null;
-        Vector3 curExtents = p.GetHalfExtentsOnScreen(window.network.cameras[cur]);
+        Vector3 curExtents = p.GetHalfExtentsOnScreen(player.cameras[cur]);
 
         //textDebug.text = curCenter + " " + curExtents;
 
@@ -26,9 +27,9 @@ public class PortalManager : MonoBehaviour {
             if (i == cur) continue;
 
             foreach (var portal in portals) {
-                inside = GetCenterOnScreen(i, portal, window.network.cameras[i], out Vector3 center);
+                inside = GetCenterOnScreen(i, portal, player.cameras[i], out Vector3 center);
                 if (!inside) continue;
-                Vector3 extends = portal.GetHalfExtentsOnScreen(window.network.cameras[i]);
+                Vector3 extends = portal.GetHalfExtentsOnScreen(player.cameras[i]);
 
                 //Debug.Log(center + " " + extends);
 

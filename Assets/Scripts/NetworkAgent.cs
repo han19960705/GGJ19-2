@@ -33,10 +33,8 @@ public class NetworkAgent : MonoBehaviour {
     [HideInInspector]
     public NetworkClient client;
 
-    public Camera[] cameras;
-
     // the first instance start as host, rest instances start as clients
-    void Start() {
+    void Awake() {
         manager = GetComponent<NetworkManager>();
         hud = GetComponent<NetworkManagerHUD>();
         client = manager.StartHost();
@@ -56,10 +54,8 @@ public class NetworkAgent : MonoBehaviour {
         }
     }
 
-    void OnConnnected(NetworkMessage msg) {
+    public void OnConnnected(NetworkMessage msg) {
         connID = msg.conn.connectionId;
-        int idx = connID >= cameras.Length ? cameras.Length - 1 : connID;
-        cameras[idx].gameObject.active = true;
     }
 
     public bool Send(short msgType, NSGMessage msg) {

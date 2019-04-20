@@ -29,8 +29,10 @@ public class PlayerManager : MonoBehaviour {
     public List<Vector3> cameraPos = new List<Vector3>();
 
     public NetworkAgent network;
-    public Transform player;
-    public Transform cam;
+    public Transform[] players;
+    public Camera[] cameras;
+
+    int idx;
 
     public void SetPosition(int idx, float x, float y, float z) {
         while (positions.Count <= idx) positions.Add(new Vector3());
@@ -48,21 +50,33 @@ public class PlayerManager : MonoBehaviour {
 
     void Start() {
         network.RegisterHandler<PlayerMessage>(NSGMsgType.Player, OnPlayerMsg);
+        network.client.RegisterHandler(MsgType.Connect, OnConnected);
     }
 
     void Update() {
-        SetPosition(network.connID, player.position.x, player.position.y, player.position.z);
-        SetCameraPos(network.connID, cam.position.x, cam.position.y, cam.position.z);
-        SendPlayerMsg(positions[network.connID], cameraPos[network.connID]);
+        Transform player = players[idx];
+        Transform cam = cameras[idx].transform;
+        SetPosition(idx, player.position.x, player.position.y, player.position.z);
+        SetCameraPos(idx, cam.position.x, cam.position.y, cam.position.z);
+        SendPlayerMsg(positions[idx], cameraPos[idx]);
+    }
+
+    void OnConnected(NetworkMessage msg) {
+        int connID = msg.conn.connectionId;
+        idx = connID >= cameras.Length ? cameras.Length - 1 : connID;
+        cameras[idx].gameObject.active = true;
+        players[idx].gameObject.active = true;
+        network.OnConnnected(msg); // overrided original callback
     }
 
     void SendPlayerMsg(Vector3 pos, Vector3 camPos) {
         if (!NetworkClient.active) return;
         PlayerMessage msg = new PlayerMessage {
+            connID = network.connID,
             pos = pos,
             camPos = camPos
         };
-        network.Send(NSGMsgType.Window, msg);
+        network.Send(NSGMsgType.Player, msg);
     }
 
     void OnPlayerMsg(PlayerMessage msg) {
@@ -75,7 +89,7 @@ public class PlayerManager : MonoBehaviour {
         int ypos = 0;
         for (int i = 0; i < positions.Count; i++) {
             GUI.Label(new Rect(200, ypos += 20, 300, 20), 
-                positions[i] + " " + sizes[i]);
+                positions[i] + " " + cameraPos[i]);
         }
     }
     /* */
