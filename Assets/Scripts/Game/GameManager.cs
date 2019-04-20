@@ -23,9 +23,9 @@ public class GameManager : MonoBehaviour
         }
         set
         {
-            this._state = value;
+            _state = value;
             //TODO:
-            switch (this._state)
+            switch (_state)
             {
                 case EGameState.LOBBY:
                     break;
@@ -62,9 +62,10 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private bool CheckIsGameOver()
+    public void Respawn()
     {
+        state = EGameState.GAMING;
 
-        return false;
+        Player.Ins.Respawn();
     }
 }

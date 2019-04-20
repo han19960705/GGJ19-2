@@ -23,19 +23,18 @@ public class CanvasManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        text.transform.gameObject.SetActive(false);
-        btn.transform.gameObject.SetActive(false);
+        ShowGameOver(false);
+    }
+    
+    public void ShowGameOver(bool flag = true)
+    {
+        text.transform.gameObject.SetActive(flag);
+        btn.transform.gameObject.SetActive(flag);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnBtnClicked()
     {
-        
-    }
-
-    public void ShowGameOver()
-    {
-        text.transform.gameObject.SetActive(true);
-        btn.transform.gameObject.SetActive(true);
+        ShowGameOver(false);
+        GameManager.Ins.Respawn();
     }
 }
