@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -32,6 +31,9 @@ public class NetworkAgent : MonoBehaviour {
     public int connID;
     [HideInInspector]
     public NetworkClient client;
+
+    [HideInInspector]
+    public bool dbg_info = false;
 
     // the first instance start as host, rest instances start as clients
     void Awake() {

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
@@ -23,11 +22,6 @@ class PlayerMessage : NSGMessage {
 
 public class PlayerManager : MonoBehaviour {
 
-    [HideInInspector]
-    public List<Vector3> positions = new List<Vector3>();
-    [HideInInspector]
-    public List<Vector3> cameraPos = new List<Vector3>();
-
     public NetworkAgent network;
     public Transform[] players;
     public Camera[] cameras;
@@ -35,17 +29,15 @@ public class PlayerManager : MonoBehaviour {
     int idx;
 
     public void SetPosition(int idx, float x, float y, float z) {
-        while (positions.Count <= idx) positions.Add(new Vector3());
-        Vector3 p = positions[idx];
+        Vector3 p = players[idx].position;
         p.x = x; p.y = y; p.z = z;
-        positions[idx] = p;
+        players[idx].position = p;
     }
 
     public void SetCameraPos(int idx, float x, float y, float z) {
-        while (cameraPos.Count <= idx) cameraPos.Add(new Vector3());
-        Vector3 p = cameraPos[idx];
+        Vector3 p = cameras[idx].transform.position;
         p.x = x; p.y = y; p.z = z;
-        cameraPos[idx] = p;
+        cameras[idx].transform.position = p;
     }
 
     void Start() {
@@ -58,7 +50,7 @@ public class PlayerManager : MonoBehaviour {
         Transform cam = cameras[idx].transform;
         SetPosition(idx, player.position.x, player.position.y, player.position.z);
         SetCameraPos(idx, cam.position.x, cam.position.y, cam.position.z);
-        SendPlayerMsg(positions[idx], cameraPos[idx]);
+        SendPlayerMsg(players[idx].position, cameras[idx].transform.position);
     }
 
     void OnConnected(NetworkMessage msg) {
@@ -83,14 +75,14 @@ public class PlayerManager : MonoBehaviour {
         SetPosition(msg.connID, msg.pos.x, msg.pos.y, msg.pos.z);
         SetCameraPos(msg.connID, msg.camPos.x, msg.camPos.y, msg.camPos.z);
     }
-
-    /* *
+    
     void OnGUI() {
+        if (!network.dbg_info) return;
         int ypos = 0;
-        for (int i = 0; i < positions.Count; i++) {
-            GUI.Label(new Rect(200, ypos += 20, 300, 20), 
-                positions[i] + " " + cameraPos[i]);
+        GUI.Label(new Rect(300, ypos += 20, 300, 20), "Player & Camera:");
+        for (int i = 0; i < players.Length; i++) {
+            GUI.Label(new Rect(300, ypos += 20, 300, 20),
+                players[i].position + " " + cameras[i].transform.position);
         }
     }
-    /* */
 }

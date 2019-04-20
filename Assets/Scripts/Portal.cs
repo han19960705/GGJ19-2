@@ -48,13 +48,12 @@ public class Portal : MonoBehaviour {
         return screen_size;
     }
 
-    /* */
     private void Update() {
+        if (!manager.window.network.dbg_info) return;
         Portal p = manager.GetConnectedPortal(this);
         if (!p) { SetActive(false); return; }
         SetActive(true); p.SetActive(true);
     }
-    /* */
 
     void OnCollisionExit(Collision collision) {
         Portal p = manager.GetConnectedPortal(this);
