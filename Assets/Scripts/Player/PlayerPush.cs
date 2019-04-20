@@ -22,7 +22,7 @@ public class PlayerPush : MonoBehaviour
         if (collision.CompareTag("Box"))
         {
 
-            Debug.Log("Push Enter");
+            //Debug.Log("Push Enter");
             animator.SetBool("IsPushing", true);
             AudioManager.Ins.Play("push");
         }
@@ -33,7 +33,7 @@ public class PlayerPush : MonoBehaviour
         if (collision.CompareTag("Box"))
         {
 
-            Debug.Log("Push Exit");
+            //Debug.Log("Push Exit");
         }
 
         animator.SetBool("IsPushing", false);

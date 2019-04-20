@@ -9,7 +9,7 @@ public class StringerEntity : MonoBehaviour
     {
         if (other.tag == "Untagged")
         {
-            Debug.Log("Stringger trigger with untagger");
+            //Debug.Log("Stringger trigger with untagger");
         }
     }
 }

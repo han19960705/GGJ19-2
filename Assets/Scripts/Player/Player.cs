@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
 
     public Animator animator;
 
-    Vector3 initPos;
-
     private void Awake()
     {
         if (Ins != null)
@@ -23,14 +21,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        initPos = transform.position;
-        PlayerRecord.recordPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F5)) transform.position = PlayerRecord.recordPos;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
