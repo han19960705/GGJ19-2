@@ -8,9 +8,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] RoleSO setting;
 
     public Animator animator;
-    public Rigidbody2D rigidbody2D;
-    public float jumpSpeedInit = 1;
-    
+    public new Rigidbody2D rigidbody2D;
+
     bool canJump = true;
     bool isLanding = false;
 

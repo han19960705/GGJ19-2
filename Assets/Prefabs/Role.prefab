@@ -78,7 +78,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -155,7 +155,6 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: b9f30be41e070514a826d7d6d4244dd1, type: 2}
   animator: {fileID: 8374098609781113705}
   rigidbody2D: {fileID: 8374098609781113702}
-  jumpSpeedInit: 1
 --- !u!114 &345232138
 MonoBehaviour:
   m_ObjectHideFlags: 0
