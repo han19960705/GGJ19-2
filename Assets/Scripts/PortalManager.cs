@@ -1,40 +1,71 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public class Tunnel {
+    public Portal entry;
+    public Portal target;
+    public int entryWindow;
+    public int targetWindow;
+    public Vector3 entryCenter;
+    public Vector3 entryExtents;
+    public Vector3 targetCenter;
+    public Vector3 targetExtents;
+    public int targetPortalIdx; // for disabling the portal we came from
+}
+
 public class PortalManager : MonoBehaviour {
 
     public WindowManager window;
     public PlayerManager player;
-    Portal[] portals;
 
     public Text textDebug;
-    Vector3 leeway = new Vector3(15, 15); // in pixels
+    public Vector3 leeway = new Vector3(15, 15); // in pixels
+
+    Tunnel _tunnel = new Tunnel();
+    [HideInInspector]
+    public Portal[] portals;
+
+    int disabledIdx = -1;
 
     // Start is called before the first frame update
     void Start() {
         portals = GetComponentsInChildren<Portal>();
     }
 
-    public Portal GetConnectedPortal(Portal p) {
-        int cur = window.network.connID;
-        bool inside = GetCenterOnScreen(cur, p, player.cameras[cur], out Vector3 curCenter);
-        if (!inside) return null;
-        Vector3 curExtents = p.GetHalfExtentsOnScreen(player.cameras[cur]);
+    public void LeavingPortal (int idx) {
+        if (disabledIdx >= 0) portals[disabledIdx].gameObject.SetActive(true);
+        portals[idx].gameObject.SetActive(false);
+        disabledIdx = idx;
+    }
 
-        if (window.network.dbg_info) textDebug.text = curCenter + " " + curExtents + "\n\n";
+    public Tunnel GetConnectedPortal(Portal p) {
+        Tunnel tunnel = _tunnel;
+        tunnel.entry = p;
+        tunnel.entryWindow = window.network.connID;
+        bool inside = GetCenterOnScreen(tunnel.entryWindow, p, player.cameras[tunnel.entryWindow], out tunnel.entryCenter);
+        if (!inside) return null;
+        tunnel.entryExtents = p.GetHalfExtentsOnScreen(player.cameras[tunnel.entryWindow]);
+
+        if (window.network.dbg_info) textDebug.text = tunnel.entryCenter + " " + tunnel.entryExtents + "\n\n";
+        else textDebug.text = "";
 
         for (int i = 0; i < window.positions.Count; i++) {
-            if (i == cur) continue;
+            if (i == tunnel.entryWindow) continue;
 
-            foreach (var portal in portals) {
-                inside = GetCenterOnScreen(i, portal, player.cameras[i], out Vector3 center);
+            for (int j = 0; j < portals.Length; j++) {
+                Portal portal = portals[j];
+                inside = GetCenterOnScreen(i, portal, player.cameras[i], out tunnel.targetCenter);
                 if (!inside) continue;
-                Vector3 extents = portal.GetHalfExtentsOnScreen(player.cameras[i]);
+                tunnel.targetExtents = portal.GetHalfExtentsOnScreen(player.cameras[i]);
 
-                if (window.network.dbg_info) textDebug.text += center + " " + extents + "\n";
+                if (window.network.dbg_info) textDebug.text += tunnel.targetCenter + " " + tunnel.targetExtents + "\n";
 
-                if (CloseEnough(curCenter, curExtents, center, extents))
-                    return portal;
+                tunnel.target = portal;
+                tunnel.targetWindow = i;
+                tunnel.targetPortalIdx = j;
+
+                if (CloseEnough(tunnel.entryCenter, tunnel.entryExtents, tunnel.targetCenter, tunnel.targetExtents))
+                    return tunnel;
             }
 
         }

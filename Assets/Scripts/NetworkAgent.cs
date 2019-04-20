@@ -11,15 +11,18 @@ class NSGMsgType {
 
 public class NSGMessage : MessageBase {
     public int connID;
+    public int targetConnID;
 
     public override void Deserialize(NetworkReader reader) {
         base.Deserialize(reader);
         connID = reader.ReadInt32();
+        targetConnID = reader.ReadInt32();
     }
 
     public override void Serialize(NetworkWriter writer) {
         base.Serialize(writer);
         writer.Write(connID);
+        writer.Write(targetConnID);
     }
 }
 
@@ -32,8 +35,7 @@ public class NetworkAgent : MonoBehaviour {
     [HideInInspector]
     public NetworkClient client;
 
-    [HideInInspector]
-    public bool dbg_info = false;
+    public bool dbg_info = true;
 
     // the first instance start as host, rest instances start as clients
     void Awake() {
@@ -48,8 +50,8 @@ public class NetworkAgent : MonoBehaviour {
         if (!ClientScene.ready && manager.client.connection != null) {
             ClientScene.Ready(manager.client.connection);
         }
-        if (Input.GetKeyDown(KeyCode.F10)) hud.showGUI = false;
-        if (Input.GetKeyDown(KeyCode.F11)) hud.showGUI = true;
+        if (Input.GetKeyDown(KeyCode.F10)) dbg_info = hud.showGUI = false;
+        if (Input.GetKeyDown(KeyCode.F11)) dbg_info = hud.showGUI = true;
         if (!client.isConnected) {
             var clients = NetworkClient.allClients;
             if (clients.Count > 0) client = clients[0];

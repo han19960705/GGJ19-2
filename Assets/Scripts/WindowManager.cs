@@ -75,33 +75,32 @@ public class WindowManager : MonoBehaviour {
         var pos = GetWindowPos();
         SetPosition(network.connID, pos.x, pos.y);
         SetSize(network.connID, Screen.width, Screen.height);
-        SendWindowMsg(positions[network.connID], sizes[network.connID]);
+        SendWindowMsg(network.connID);
     }
 
-    void SendWindowMsg(Vector2 pos, Vector2 size) {
+    public void SendWindowMsg(int connID) {
         if (!NetworkClient.active) return;
         WindowMessage msg = new WindowMessage {
             connID = network.connID,
-            pos = pos,
-            size = size
+            targetConnID = connID,
+            pos = positions[connID],
+            size = sizes[connID]
         };
         network.Send(NSGMsgType.Window, msg);
     }
 
     void OnWindowMsg(WindowMessage msg) {
-        SetPosition(msg.connID, msg.pos.x, msg.pos.y);
-        SetSize(msg.connID, (int)msg.size.x, (int)msg.size.y);
+        SetPosition(msg.targetConnID, msg.pos.x, msg.pos.y);
+        SetSize(msg.targetConnID, (int)msg.size.x, (int)msg.size.y);
     }
 
-    /* */
     void OnGUI() {
         if (!network.dbg_info) return;
-        int ypos = 0;
-        GUI.Label(new Rect(0, ypos += 20, 300, 20), "Window Pos & Size:");
+        int ypos = 80;
+        GUI.Label(new Rect(300, ypos += 20, 300, 20), "Window Pos & Size:");
         for (int i = 0; i < positions.Count; i++) {
-            GUI.Label(new Rect(0, ypos += 20, 300, 20), 
+            GUI.Label(new Rect(300, ypos += 20, 300, 20), 
                 positions[i] + " " + sizes[i]);
         }
     }
-    /* */
 }

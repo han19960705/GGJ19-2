@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -17,10 +15,18 @@ public class PlayerMove : MonoBehaviour
 
     float prevPosX;
     float prevPosY;
-    
+
+    Vector3 initPos;
+
+    void Start()
+    {
+        initPos = transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F5)) transform.position = initPos;
         if (GameManager.Ins.state != EGameState.GAMING)
             return;
         //prev record

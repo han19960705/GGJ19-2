@@ -49,15 +49,29 @@ public class Portal : MonoBehaviour {
     }
 
     private void Update() {
-        if (!manager.window.network.dbg_info) return;
-        Portal p = manager.GetConnectedPortal(this);
-        if (!p) { SetActive(false); return; }
-        SetActive(true); p.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.F8)) sprite.enabled = false;
+        if (Input.GetKeyDown(KeyCode.F9)) sprite.enabled = true;
+        Tunnel t = manager.GetConnectedPortal(this);
+        if (t == null) { SetActive(false); return; }
+        SetActive(true); t.target.SetActive(true);
     }
 
-    void OnCollisionExit(Collision collision) {
-        Portal p = manager.GetConnectedPortal(this);
-        if (!p) return; // die
-        // teleport
+    void OnTriggerEnter2D(Collider2D collider) {
+        Tunnel t = manager.GetConnectedPortal(this);
+        if (t == null) return; // die
+        // teleport away
+        Vector3 dir = ScreenToWorldVector(t.entryCenter - t.targetCenter, manager.player.cameras[t.targetWindow]);
+        Vector3 pos = t.target.transform.position + dir;
+        manager.player.SetPosition(t.targetWindow, pos.x, pos.y, pos.z);
+        manager.player.SendPlayerMsg(t.targetWindow, t.targetPortalIdx);
+        collider.gameObject.SetActive(false);
+    }
+
+    Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
+        Vector3 world_vector = v;
+        world_vector.x /= camera.pixelWidth / camera.aspect;
+        world_vector.y /= -camera.pixelHeight;
+        world_vector *= camera.orthographicSize;
+        return world_vector;
     }
 }
