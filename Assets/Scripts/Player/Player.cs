@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +23,9 @@ public class Player : MonoBehaviour
         Debug.Log("Player Trigger " + collision.transform.tag + " " + collision.transform.name);
         if (collision.transform.CompareTag("Stinger"))
         {
-            //TODO : change game state to GAME OVER
-            GameManager.Ins.state = EGameState.GAMEOVER;
+            this.animator.SetTrigger("Die");
+            ////TODO : change game state to GAME OVER
+            //GameManager.Ins.state = EGameState.GAMEOVER;
         }
     }
 
@@ -31,8 +34,16 @@ public class Player : MonoBehaviour
         Debug.Log("Player with " + collision.transform.tag + " " + collision.transform.name);
         if (collision.transform.CompareTag("Stinger"))
         {
-            //TODO : change game state to GAME OVER
-            GameManager.Ins.state = EGameState.GAMEOVER;
+            this.animator.SetTrigger("Die");
+            ////TODO : change game state to GAME OVER
+            //GameManager.Ins.state = EGameState.GAMEOVER;
         }
+    }
+
+    //Animation Events
+    public void GameOver()
+    {
+        //TODO : change game state to GAME OVER
+        GameManager.Ins.state = EGameState.GAMEOVER;
     }
 }
