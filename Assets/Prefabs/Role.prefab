@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8374098609781113707}
   - component: {fileID: 8374098609781113702}
   - component: {fileID: 8374098609781113706}
+  - component: {fileID: 345232138}
   m_Layer: 0
   m_Name: Role
   m_TagString: Untagged
@@ -133,7 +134,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.25
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -155,3 +156,15 @@ MonoBehaviour:
   animator: {fileID: 8374098609781113705}
   rigidbody2D: {fileID: 8374098609781113702}
   jumpSpeedInit: 1
+--- !u!114 &345232138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374098609781113700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffd0125e11cd0d4895a1f8064e21e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
