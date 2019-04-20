@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Player with " + collision.transform.tag + " " + collision.transform.name);
+        //Debug.Log("Player Collision  Enter" + collision.transform.tag + " " + collision.transform.name);
         if (collision.transform.CompareTag("Stinger"))
         {
             this.animator.SetTrigger("Die");

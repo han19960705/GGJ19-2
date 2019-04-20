@@ -45,6 +45,8 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("IsLanding", false);
             animator.SetTrigger("Jump");
 
+            AudioManager.Ins.Play("jump");
+
             rigidbody2D.AddForce(new Vector2(0, setting.moveSetting.jumpForce), ForceMode2D.Impulse);
         }
 
@@ -68,17 +70,19 @@ public class PlayerMove : MonoBehaviour
             if (isLanding)
             {
                 animator.SetBool("IsMoving", true);
+                AudioManager.Ins.Play("move");
             }
         }
         else
         {
             animator.SetBool("IsMoving", false);
+            AudioManager.Ins.Stop("move");
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("here OnCollisionEnter with " + collision.transform.tag + " "+ collision.transform.name);
+        //Debug.Log("here OnCollisionEnter with " + collision.transform.tag + " "+ collision.transform.name);
         if (collision.transform.tag != "Box")
         {
             canJump = true;

@@ -17,11 +17,14 @@ public class PlayerPush : MonoBehaviour
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Box"))
         {
+
+            Debug.Log("Push Enter");
             animator.SetBool("IsPushing", true);
+            AudioManager.Ins.Play("push");
         }
     }
 
@@ -29,7 +32,11 @@ public class PlayerPush : MonoBehaviour
     {
         if (collision.CompareTag("Box"))
         {
-            animator.SetBool("IsPushing", false);
+
+            Debug.Log("Push Exit");
         }
+
+        animator.SetBool("IsPushing", false);
+        AudioManager.Ins.Stop("push");
     }
 }

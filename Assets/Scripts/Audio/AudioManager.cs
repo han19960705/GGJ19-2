@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     //Sound类型的数组，存储所有的Sound
     public Sound[] sounds;
 
+    Sound currentSound;
+
     private void Awake()
     {
         //单例
@@ -42,11 +44,15 @@ public class AudioManager : MonoBehaviour
             if (item.IsPlayOnAwake)
                 item.source.Play();
         }
+
+        currentSound = sounds[0];
     }
 
     //开放的API，通过声音的名字播放相应的片段
     public void Play(string name, float delay = 0f)
     {
+        if (name == currentSound.name && currentSound.source.isPlaying)
+            return;
         //查找在sounds中名字为name的一个Sound实例
         Sound s = Array.Find(sounds, x => x.name == name);
         if (s == null)
@@ -56,5 +62,12 @@ public class AudioManager : MonoBehaviour
         }
         //播放，delay表示延迟
         s.source.PlayDelayed(delay);
+        currentSound = s;
+    }
+
+    public void Stop(string name)
+    {
+        if (name == currentSound.name)
+            currentSound.source.Stop();
     }
 }

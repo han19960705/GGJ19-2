@@ -62,6 +62,36 @@ MonoBehaviour:
     Volume: 1
     IsPlayOnAwake: 0
     IsLoop: 0
+  - name: btn
+    Clip: {fileID: 8300000, guid: 2d9d251ab016ae847b725e71186c3b3c, type: 3}
+    source: {fileID: 0}
+    Volume: 1
+    IsPlayOnAwake: 0
+    IsLoop: 0
+  - name: jump
+    Clip: {fileID: 8300000, guid: 9d4052b58b3ee4749b5627f3a74faa49, type: 3}
+    source: {fileID: 0}
+    Volume: 1
+    IsPlayOnAwake: 0
+    IsLoop: 0
+  - name: move
+    Clip: {fileID: 8300000, guid: 9552591cb68fb694e9e421984e2eb726, type: 3}
+    source: {fileID: 0}
+    Volume: 1
+    IsPlayOnAwake: 0
+    IsLoop: 0
+  - name: push
+    Clip: {fileID: 8300000, guid: 09fd3f0b248e9894ebf15356c771dee1, type: 3}
+    source: {fileID: 0}
+    Volume: 1
+    IsPlayOnAwake: 0
+    IsLoop: 0
+  - name: record
+    Clip: {fileID: 8300000, guid: 486779b64317a3c4ba5b9834c1c47aba, type: 3}
+    source: {fileID: 0}
+    Volume: 1
+    IsPlayOnAwake: 0
+    IsLoop: 0
 --- !u!1 &3042037957630501376
 GameObject:
   m_ObjectHideFlags: 0
