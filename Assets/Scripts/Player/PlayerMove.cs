@@ -79,7 +79,18 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("here OnCollisionEnter with " + collision.transform.tag + " "+ collision.transform.name);
-        canJump = true;
+        if (collision.transform.tag != "Box")
+        {
+            canJump = true;
+        }
+        else
+        {
+            if (transform.position.y > collision.transform.position.y)
+            {
+                canJump = true;
+            }
+        }
+
         isLanding = true;
         animator.SetBool("IsLanding", true);
     }
