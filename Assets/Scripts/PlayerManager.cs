@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
@@ -76,9 +75,9 @@ public class PlayerManager : MonoBehaviour {
         SetPosition(msg.connID, msg.pos.x, msg.pos.y, msg.pos.z);
         SetCameraPos(msg.connID, msg.camPos.x, msg.camPos.y, msg.camPos.z);
     }
-
-    /* */
+    
     void OnGUI() {
+        if (!network.dbg_info) return;
         int ypos = 0;
         GUI.Label(new Rect(300, ypos += 20, 300, 20), "Player & Camera:");
         for (int i = 0; i < players.Length; i++) {
@@ -86,5 +85,4 @@ public class PlayerManager : MonoBehaviour {
                 players[i].position + " " + cameras[i].transform.position);
         }
     }
-    /* */
 }

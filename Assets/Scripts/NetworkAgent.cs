@@ -32,6 +32,9 @@ public class NetworkAgent : MonoBehaviour {
     [HideInInspector]
     public NetworkClient client;
 
+    [HideInInspector]
+    public bool dbg_info = false;
+
     // the first instance start as host, rest instances start as clients
     void Awake() {
         manager = GetComponent<NetworkManager>();

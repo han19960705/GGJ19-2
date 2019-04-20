@@ -8,7 +8,7 @@ public class PortalManager : MonoBehaviour {
     Portal[] portals;
 
     public Text textDebug;
-    Vector3 leeway = new Vector3(30, 30); // in pixels
+    Vector3 leeway = new Vector3(15, 15); // in pixels
 
     // Start is called before the first frame update
     void Start() {
@@ -21,7 +21,7 @@ public class PortalManager : MonoBehaviour {
         if (!inside) return null;
         Vector3 curExtents = p.GetHalfExtentsOnScreen(player.cameras[cur]);
 
-        textDebug.text = curCenter + " " + curExtents;
+        if (window.network.dbg_info) textDebug.text = curCenter + " " + curExtents + "\n\n";
 
         for (int i = 0; i < window.positions.Count; i++) {
             if (i == cur) continue;
@@ -29,11 +29,11 @@ public class PortalManager : MonoBehaviour {
             foreach (var portal in portals) {
                 inside = GetCenterOnScreen(i, portal, player.cameras[i], out Vector3 center);
                 if (!inside) continue;
-                Vector3 extends = portal.GetHalfExtentsOnScreen(player.cameras[i]);
+                Vector3 extents = portal.GetHalfExtentsOnScreen(player.cameras[i]);
 
-                Debug.Log(center + " " + extends);
+                if (window.network.dbg_info) textDebug.text += center + " " + extents + "\n";
 
-                if (CloseEnough(curCenter, curExtents, center, extends))
+                if (CloseEnough(curCenter, curExtents, center, extents))
                     return portal;
             }
 

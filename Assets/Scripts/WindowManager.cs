@@ -95,6 +95,7 @@ public class WindowManager : MonoBehaviour {
 
     /* */
     void OnGUI() {
+        if (!network.dbg_info) return;
         int ypos = 0;
         GUI.Label(new Rect(0, ypos += 20, 300, 20), "Window Pos & Size:");
         for (int i = 0; i < positions.Count; i++) {
