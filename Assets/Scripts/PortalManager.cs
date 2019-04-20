@@ -54,6 +54,7 @@ public class PortalManager : MonoBehaviour {
 
             for (int j = 0; j < portals.Length; j++) {
                 Portal portal = portals[j];
+                if (!portal.gameObject.activeInHierarchy) continue;
                 inside = GetCenterOnScreen(i, portal, player.cameras[i], out tunnel.targetCenter);
                 if (!inside) continue;
                 tunnel.targetExtents = portal.GetHalfExtentsOnScreen(player.cameras[i]);
