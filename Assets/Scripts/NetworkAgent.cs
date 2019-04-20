@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 
 class NSGMsgType {
     public static short Window = MsgType.Highest + 1;
+    public static short Player = MsgType.Highest + 2;
 }
 
 public class NSGMessage : MessageBase {
@@ -32,6 +33,8 @@ public class NetworkAgent : MonoBehaviour {
     [HideInInspector]
     public NetworkClient client;
 
+    public Camera[] cameras;
+
     // the first instance start as host, rest instances start as clients
     void Start() {
         manager = GetComponent<NetworkManager>();
@@ -44,7 +47,6 @@ public class NetworkAgent : MonoBehaviour {
     void Update() {
         if (!ClientScene.ready && manager.client.connection != null) {
             ClientScene.Ready(manager.client.connection);
-            if (ClientScene.localPlayers.Count == 0) ClientScene.AddPlayer(0);
         }
         if (Input.GetKeyDown(KeyCode.F10)) hud.showGUI = false;
         if (Input.GetKeyDown(KeyCode.F11)) hud.showGUI = true;
@@ -56,10 +58,12 @@ public class NetworkAgent : MonoBehaviour {
 
     void OnConnnected(NetworkMessage msg) {
         connID = msg.conn.connectionId;
+        int idx = connID >= cameras.Length ? cameras.Length - 1 : connID;
+        cameras[idx].gameObject.active = true;
     }
 
     public bool Send(short msgType, NSGMessage msg) {
-        if (ClientScene.ready && manager.client.connection != null) return client.Send(msgType, msg);
+        if (ClientScene.ready) return client.Send(msgType, msg);
         return false;
     }
 

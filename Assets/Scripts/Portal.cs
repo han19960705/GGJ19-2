@@ -18,19 +18,19 @@ public class Portal : MonoBehaviour {
         sprite.color = active ? color_active : color_inactive;
     }
 
-    public bool GetCenterInClientRect(Transform player, out Vector3 screen_pos) {
+    public bool GetCenterInClientRect(Camera camera, out Vector3 screen_pos) {
         screen_pos = transform.position;
-        screen_pos -= player.position;
-        screen_pos.x = 1.0f + screen_pos.x / (Camera.main.orthographicSize * Camera.main.aspect);
-        screen_pos.y = 1.0f - screen_pos.y / Camera.main.orthographicSize;
+        screen_pos -= camera.transform.position;
+        screen_pos.x = 1.0f + screen_pos.x / (camera.orthographicSize * camera.aspect);
+        screen_pos.y = 1.0f - screen_pos.y / camera.orthographicSize;
         if (screen_pos.x < -0.1f || screen_pos.x > 2.1f || screen_pos.y < -0.1f || screen_pos.x > 2.1f)
             return false; // outside current window boundary
-        screen_pos.x *= Camera.main.pixelWidth * 0.5f;
-        screen_pos.y *= Camera.main.pixelHeight * 0.5f;
+        screen_pos.x *= camera.pixelWidth * 0.5f;
+        screen_pos.y *= camera.pixelHeight * 0.5f;
         return true;
     }
 
-    public Vector3 GetHalfExtentsOnScreen() {
+    public Vector3 GetHalfExtentsOnScreen(Camera camera) {
         // get world space size (this version handles rotating correctly)
         Vector2 sprite_size = sprite.sprite.rect.size;
         Vector2 local_sprite_size = sprite_size / sprite.sprite.pixelsPerUnit;
@@ -39,12 +39,12 @@ public class Portal : MonoBehaviour {
         world_size.y *= transform.lossyScale.y;
 
         //convert to screen space size
-        Vector3 screen_size = 0.5f * world_size / Camera.main.orthographicSize;
-        screen_size.x /= Camera.main.aspect;
+        Vector3 screen_size = 0.5f * world_size / camera.orthographicSize;
+        screen_size.x /= camera.aspect;
 
         //size in pixels
-        screen_size.x *= Camera.main.pixelWidth * 0.5f;
-        screen_size.y *= Camera.main.pixelHeight * 0.5f;
+        screen_size.x *= camera.pixelWidth * 0.5f;
+        screen_size.y *= camera.pixelHeight * 0.5f;
         return screen_size;
     }
 

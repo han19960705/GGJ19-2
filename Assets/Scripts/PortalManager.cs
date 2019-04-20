@@ -15,34 +15,34 @@ public class PortalManager : MonoBehaviour {
     }
 
     public Portal GetConnectedPortal(Portal p) {
-        //int cur = window.network.connID;
-        //bool inside = GetCenterOnScreen(cur, p, window.network.cameras[cur], out Vector3 curCenter);
-        //if (!inside) return null;
-        //Vector3 curExtents = p.GetHalfExtentsOnScreen(window.network.cameras[cur]);
+        int cur = window.network.connID;
+        bool inside = GetCenterOnScreen(cur, p, window.network.cameras[cur], out Vector3 curCenter);
+        if (!inside) return null;
+        Vector3 curExtents = p.GetHalfExtentsOnScreen(window.network.cameras[cur]);
 
-        ////textDebug.text = curCenter + " " + curExtents;
+        //textDebug.text = curCenter + " " + curExtents;
 
-        //for (int i = 0; i < window.positions.Count; i++) {
-        //    if (i == cur) continue;
+        for (int i = 0; i < window.positions.Count; i++) {
+            if (i == cur) continue;
 
-        //    foreach (var portal in portals) {
-        //        inside = GetCenterOnScreen(i, portal, window.network.cameras[i], out Vector3 center);
-        //        if (!inside) continue;
-        //        Vector3 extends = portal.GetHalfExtentsOnScreen(window.network.cameras[i]);
+            foreach (var portal in portals) {
+                inside = GetCenterOnScreen(i, portal, window.network.cameras[i], out Vector3 center);
+                if (!inside) continue;
+                Vector3 extends = portal.GetHalfExtentsOnScreen(window.network.cameras[i]);
 
-        //        //Debug.Log(center + " " + extends);
+                //Debug.Log(center + " " + extends);
 
-        //        if (CloseEnough(curCenter, curExtents, center, extends))
-        //            return portal;
-        //    }
+                if (CloseEnough(curCenter, curExtents, center, extends))
+                    return portal;
+            }
 
-        //}
+        }
 
         return null;
     }
 
-    bool GetCenterOnScreen(int idx, Portal p, Transform player, out Vector3 screen_pos) {
-        bool inside = p.GetCenterInClientRect(player, out screen_pos);
+    bool GetCenterOnScreen(int idx, Portal p, Camera camera, out Vector3 screen_pos) {
+        bool inside = p.GetCenterInClientRect(camera, out screen_pos);
         if (!inside) return false;
         if (idx >= window.positions.Count) return false;
         Vector2 pos = window.positions[idx];
