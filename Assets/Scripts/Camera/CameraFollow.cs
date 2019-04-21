@@ -35,7 +35,7 @@ public class CameraFollow : MonoBehaviour {
         Vector3 tar = target.position;
         float d = tar.x - (cur.x - hw * horizontalScrollThreshold);
         if (d < 0.0f) cur.x += d;
-        d = tar.x - (cur.x + hw * horizontalScrollThreshold);
+        d = tar.x - (cur.x + hw * horizontalScrollThreshold * 0.0f);
         if (d > 0.0f) cur.x += d;
         d = tar.y - (cur.y - hh * verticleScrollThreshold * 0.5f);
         if (d < 0.0f) cur.y += d;
