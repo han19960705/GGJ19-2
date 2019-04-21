@@ -18,8 +18,8 @@ public class CameraFollow : MonoBehaviour {
 
     void Start() {
         cam = GetComponent<Camera>();
-        col = GetComponent<BoxCollider2D>();
-        col.size = new Vector2(cam.aspect, 1.0f) * 2.0f * cam.orthographicSize;
+        //col = GetComponent<BoxCollider2D>();
+        //col.size = new Vector2(cam.aspect, 1.0f) * 2.0f * cam.orthographicSize;
     }
 
     void Update() {
