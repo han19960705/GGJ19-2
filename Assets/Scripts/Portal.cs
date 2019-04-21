@@ -18,7 +18,7 @@ public class Portal : MonoBehaviour {
         screen_pos -= camera.transform.position;
         screen_pos.x = 1.0f + screen_pos.x / (camera.orthographicSize * camera.aspect);
         screen_pos.y = 1.0f - screen_pos.y / camera.orthographicSize;
-        if (screen_pos.x < -0.1f || screen_pos.x > 2.1f || screen_pos.y < -0.1f || screen_pos.x > 2.1f)
+        if (screen_pos.x < -0.5f || screen_pos.x > 2.5f || screen_pos.y < -0.5f || screen_pos.x > 2.5f)
             return false; // outside current window boundary
         screen_pos.x *= camera.pixelWidth * 0.5f;
         screen_pos.y *= camera.pixelHeight * 0.5f;
