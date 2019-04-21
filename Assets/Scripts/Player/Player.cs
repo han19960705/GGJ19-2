@@ -41,6 +41,12 @@ public class Player : MonoBehaviour
             ////TODO : change game state to GAME OVER
             //GameManager.Ins.state = EGameState.GAMEOVER;
         }
+        else if (collision.transform.CompareTag("Winner"))
+        {
+
+            //TODO : change game state to GAME Winner
+            GameManager.Ins.state = EGameState.WINNER;
+        }
     }
 
     //Animation Events

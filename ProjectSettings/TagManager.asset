@@ -8,6 +8,7 @@ TagManager:
   - Stinger
   - Box
   - Record
+  - Winner
   layers:
   - Default
   - TransparentFX

@@ -45,13 +45,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Scene1
-    Clip: {fileID: 8300000, guid: d8bcc274342d81141bcd37fd6e189895, type: 3}
+    Clip: {fileID: 8300000, guid: 144b4c723f9343a4389e383c531ead77, type: 3}
     source: {fileID: 0}
     Volume: 1
     IsPlayOnAwake: 1
     IsLoop: 1
   - name: Scene2
-    Clip: {fileID: 8300000, guid: 144b4c723f9343a4389e383c531ead77, type: 3}
+    Clip: {fileID: 8300000, guid: d8bcc274342d81141bcd37fd6e189895, type: 3}
     source: {fileID: 0}
     Volume: 1
     IsPlayOnAwake: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
     Volume: 1
     IsPlayOnAwake: 0
     IsLoop: 0
+  network: {fileID: 0}
 --- !u!1 &3042037957630501376
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
                     CanvasManager.Ins.ShowGameOver();
                     break;
                 case EGameState.WINNER:
+                    CanvasManager.Ins.ShowGameWinner();
                     break;
             }
         }

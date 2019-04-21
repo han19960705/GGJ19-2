@@ -62,7 +62,7 @@ public class AudioManager : MonoBehaviour
     //开放的API，通过声音的名字播放相应的片段
     public void Play(string name, float delay = 0f)
     {
-        if (network.connID != 0) return;
+        //if (network.connID != 0) return;
         if (name == currentSound.name && currentSound.source.isPlaying)
             return;
         //查找在sounds中名字为name的一个Sound实例
@@ -79,7 +79,7 @@ public class AudioManager : MonoBehaviour
 
     public void Stop(string name)
     {
-        if (network.connID != 0) return;
+        //if (network.connID != 0) return;
         if (name == currentSound.name)
             currentSound.source.Stop();
     }

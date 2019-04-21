@@ -7,8 +7,10 @@ public class CanvasManager : MonoBehaviour
 {
     public static CanvasManager Ins { get; private set; }
 
-    public Text text;
-    public Button btn;
+    public Transform img;
+    public Transform btn;
+
+    public Transform txt;
 
     private void Awake()
     {
@@ -28,8 +30,13 @@ public class CanvasManager : MonoBehaviour
     
     public void ShowGameOver(bool flag = true)
     {
-        text.transform.gameObject.SetActive(flag);
-        btn.transform.gameObject.SetActive(flag);
+        img.gameObject.SetActive(flag);
+        btn.gameObject.SetActive(flag);
+    }
+
+    public void ShowGameWinner(bool flag = true)
+    {
+        txt.gameObject.SetActive(flag);
     }
 
     public void OnBtnClicked()
