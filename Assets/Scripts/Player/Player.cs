@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
         if (collision.transform.CompareTag("Stinger"))
         {
             animator.SetTrigger("Die");
+            AudioManager.Ins.Play("die");
             ////TODO : change game state to GAME OVER
             //GameManager.Ins.state = EGameState.GAMEOVER;
         }

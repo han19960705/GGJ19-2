@@ -15,5 +15,5 @@ MonoBehaviour:
   moveSetting:
     speed: 10
     jumpForce: 100
-  verticleScrollThreshold: 0.7
-  horizontalScrollThreshold: 0.2
+  verticleScrollThreshold: 0.3
+  horizontalScrollThreshold: 0.5

@@ -49,6 +49,9 @@ public class PlayerRecord : MonoBehaviour
             PlayerPrefs.Save();
 
             prevID = collision.GetInstanceID();
+
+            Animator animator = collision.transform.GetComponent<Animator>();
+            animator.SetTrigger("Record");
         }
     }
 }
