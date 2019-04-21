@@ -97,3 +97,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setting: {fileID: 11400000, guid: b9f30be41e070514a826d7d6d4244dd1, type: 2}
   target: {fileID: 0}
+  freezed: 0

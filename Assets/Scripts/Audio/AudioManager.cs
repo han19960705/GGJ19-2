@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -10,12 +8,14 @@ public class AudioManager : MonoBehaviour
     //Sound类型的数组，存储所有的Sound
     public Sound[] sounds;
 
+    public NetworkAgent network;
+
     Sound currentSound;
 
     private void Awake()
     {
         //单例
-        if (Ins == null)
+        if (Ins == null || network.connID == 0)
             Ins = this;
         else
         {
@@ -24,7 +24,8 @@ public class AudioManager : MonoBehaviour
         }
     }
     
-    private void Start() { 
+    private void Start() {
+        if (network.connID != 0) return;
         //对每一项Sound进行初始化
         foreach (var item in sounds)
         {
@@ -51,6 +52,7 @@ public class AudioManager : MonoBehaviour
     //开放的API，通过声音的名字播放相应的片段
     public void Play(string name, float delay = 0f)
     {
+        if (network.connID != 0) return;
         if (name == currentSound.name && currentSound.source.isPlaying)
             return;
         //查找在sounds中名字为name的一个Sound实例
@@ -67,6 +69,7 @@ public class AudioManager : MonoBehaviour
 
     public void Stop(string name)
     {
+        if (network.connID != 0) return;
         if (name == currentSound.name)
             currentSound.source.Stop();
     }

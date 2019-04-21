@@ -1,21 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Portal : MonoBehaviour {
 
     SpriteRenderer sprite;
     PortalManager manager;
-    Color color_active = new Color(0, 0.6f, 0);
-    Color color_inactive = new Color(0.6f, 0, 0);
-
+    Portal target = null;
+    
     // Start is called before the first frame update
     void Start() {
         sprite = GetComponent<SpriteRenderer>();
         manager = GetComponentInParent<PortalManager>();
-    }
-
-    // Update is called once per frame
-    void SetActive(bool active) {
-        sprite.color = active ? color_active : color_inactive;
     }
 
     public bool GetCenterInClientRect(Camera camera, out Vector3 screen_pos) {
@@ -48,15 +43,8 @@ public class Portal : MonoBehaviour {
         return screen_size;
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.F8)) sprite.enabled = false;
-        if (Input.GetKeyDown(KeyCode.F9)) sprite.enabled = true;
-        Tunnel t = manager.GetConnectedPortal(this);
-        if (t == null) { SetActive(false); return; }
-        SetActive(true); t.target.SetActive(true);
-    }
-
     void OnTriggerEnter2D(Collider2D collider) {
+        if (!collider.GetComponent<PlayerMove>()) return;
         Tunnel t = manager.GetConnectedPortal(this);
         if (t == null) return; // die
         // teleport away
@@ -68,7 +56,28 @@ public class Portal : MonoBehaviour {
         manager.LeavingPortal(t.targetPortalIdx);
     }
 
-    Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.F8)) sprite.enabled = false;
+        if (Input.GetKeyDown(KeyCode.F9)) sprite.enabled = true;
+        Tunnel t = manager.GetConnectedPortal(this);
+        if (t == null) { Disconnect(this); return; }
+        Connect(this, t.target);
+    }
+
+    static void Connect(Portal a, Portal b) {
+        if (a.target == b) return;
+        a.target = b;
+        a.sprite.color = b.sprite.color = enabled_color;// Color.HSVToRGB(Random.value, 0.7f, 1.0f);
+    }
+
+    static Color disabled_color = new Color(0.6f, 0.0f, 0.0f);
+    static Color enabled_color = new Color(0.0f, 0.6f, 0.0f);
+    static void Disconnect(Portal p) {
+        p.sprite.color = disabled_color;
+        p.target = null;
+    }
+
+    static Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
         Vector3 world_vector = v;
         world_vector.x /= 0.5f * camera.pixelWidth / camera.aspect;
         world_vector.y /= 0.5f * -camera.pixelHeight;
