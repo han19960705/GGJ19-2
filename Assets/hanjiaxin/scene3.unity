@@ -15381,8 +15381,8 @@ Transform:
   - {fileID: 1726723378}
   - {fileID: 1586939624}
   - {fileID: 61359421}
-  - {fileID: 1483454645}
   - {fileID: 1856399601}
+  - {fileID: 1483454645}
   m_Father: {fileID: 1497990725}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19607,6 +19607,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 687075831, guid: 96468a517f999d940944f3b93ee864f1, type: 3}
+      propertyPath: network
+      value: 
+      objectReference: {fileID: 985256830}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96468a517f999d940944f3b93ee864f1, type: 3}
 --- !u!1 &1250921823
