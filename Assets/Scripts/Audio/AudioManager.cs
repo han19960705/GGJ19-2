@@ -49,6 +49,16 @@ public class AudioManager : MonoBehaviour
         currentSound = sounds[0];
     }
 
+    private void Update()
+    {
+        if (network.connID != 0)
+        {
+            if (sounds[0].source.isPlaying)
+                sounds[0].source.Stop();
+        }
+
+    }
+
     //开放的API，通过声音的名字播放相应的片段
     public void Play(string name, float delay = 0f)
     {
@@ -72,5 +82,13 @@ public class AudioManager : MonoBehaviour
         if (network.connID != 0) return;
         if (name == currentSound.name)
             currentSound.source.Stop();
+    }
+
+    public void StopAll()
+    {
+        for(int i = sounds.Length; i == 0; i--)
+        {
+            sounds[i].source.Stop();
+        }
     }
 }

@@ -68,4 +68,18 @@ public class GameManager : MonoBehaviour
 
         Player.Ins.Respawn();
     }
+
+    //OnApplicationFocus
+
+    //private void OnApplicationFocus(bool focus)
+    //{
+    //    if (focus)
+    //    {
+    //    }
+    //    else
+    //    {
+    //        AudioManager.Ins.StopAll();
+    //        Debug.Log("Here stop all");
+    //    }
+    //}
 }
