@@ -6,7 +6,7 @@ public class Portal : MonoBehaviour {
     SpriteRenderer sprite;
     PortalManager manager;
     Portal target = null;
-    
+
     // Start is called before the first frame update
     void Start() {
         sprite = GetComponent<SpriteRenderer>();
@@ -64,20 +64,24 @@ public class Portal : MonoBehaviour {
         Connect(this, t.target);
     }
 
-    static void Connect(Portal a, Portal b) {
+    public Sprite active_sp;
+    public Sprite inactive_sp;
+    public Color disabled_color = new Color(0.6f, 0.0f, 0.0f);
+    public Color enabled_color = new Color(0.0f, 0.6f, 0.0f);
+    void Connect(Portal a, Portal b) {
         if (a.target == b) return;
         a.target = b;
-        a.sprite.color = b.sprite.color = enabled_color;// Color.HSVToRGB(Random.value, 0.7f, 1.0f);
+        //a.sprite.color = b.sprite.color = enabled_color;// Color.HSVToRGB(Random.value, 0.7f, 1.0f);
+        a.sprite.sprite = b.sprite.sprite = active_sp;
     }
 
-    static Color disabled_color = new Color(0.6f, 0.0f, 0.0f);
-    static Color enabled_color = new Color(0.0f, 0.6f, 0.0f);
-    static void Disconnect(Portal p) {
-        p.sprite.color = disabled_color;
+    void Disconnect(Portal p) {
+        //p.sprite.color = disabled_color;
+        p.sprite.sprite = inactive_sp;
         p.target = null;
     }
 
-    static Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
+    Vector3 ScreenToWorldVector(Vector3 v, Camera camera) {
         Vector3 world_vector = v;
         world_vector.x /= 0.5f * camera.pixelWidth / camera.aspect;
         world_vector.y /= 0.5f * -camera.pixelHeight;
