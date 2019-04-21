@@ -11,21 +11,21 @@ public class PlayerRecord : MonoBehaviour
 
     private void Awake()
     {
-        if (PlayerPrefs.HasKey("recordPosX"))
-        {
-            recordPos.x = PlayerPrefs.GetFloat("recordPosX");
-            recordPos.y = PlayerPrefs.GetFloat("recordPosY");
-            recordPos.z = PlayerPrefs.GetFloat("recordPosZ");
-        }
-        else
-        {
-            PlayerPrefs.SetFloat("recordPosX", transform.position.x);
-            PlayerPrefs.SetFloat("recordPosY", transform.position.y);
-            PlayerPrefs.SetFloat("recordPosZ", transform.position.z);
-            PlayerPrefs.Save();
+        //if (PlayerPrefs.HasKey("recordPosX"))
+        //{
+        //    recordPos.x = PlayerPrefs.GetFloat("recordPosX");
+        //    recordPos.y = PlayerPrefs.GetFloat("recordPosY");
+        //    recordPos.z = PlayerPrefs.GetFloat("recordPosZ");
+        //}
+        //else
+        //{
+        //    PlayerPrefs.SetFloat("recordPosX", transform.position.x);
+        //    PlayerPrefs.SetFloat("recordPosY", transform.position.y);
+        //    PlayerPrefs.SetFloat("recordPosZ", transform.position.z);
+        //    PlayerPrefs.Save();
 
-            recordPos = transform.position;
-        }
+        recordPos = transform.position;
+        //}
     }
 
     void Update()
@@ -43,10 +43,10 @@ public class PlayerRecord : MonoBehaviour
             Debug.Log("record " + collision.name);
 
             recordPos = collision.transform.position;
-            PlayerPrefs.SetFloat("recordPosX", recordPos.x);
-            PlayerPrefs.SetFloat("recordPosY", recordPos.y);
-            PlayerPrefs.SetFloat("recordPosZ", recordPos.z);
-            PlayerPrefs.Save();
+            //PlayerPrefs.SetFloat("recordPosX", recordPos.x);
+            //PlayerPrefs.SetFloat("recordPosY", recordPos.y);
+            //PlayerPrefs.SetFloat("recordPosZ", recordPos.z);
+            //PlayerPrefs.Save();
 
             prevID = collision.GetInstanceID();
 
