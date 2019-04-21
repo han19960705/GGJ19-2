@@ -34,13 +34,13 @@ public class PlayerManager : MonoBehaviour {
 
     public void SetPosition(int idx, float x, float y, float z) {
         Vector3 p = players[idx].position;
-        p.x = x; p.y = y; p.z = z;
+        p.x = x; p.y = y;
         players[idx].position = p;
     }
 
     public void SetCameraPos(int idx, float x, float y, float z) {
         Vector3 p = cameras[idx].transform.position;
-        p.x = x; p.y = y; p.z = z;
+        p.x = x; p.y = y;
         cameras[idx].transform.position = p;
     }
 
@@ -79,10 +79,11 @@ public class PlayerManager : MonoBehaviour {
 
     void OnPlayerMsg(PlayerMessage msg) {
         SetPosition(msg.targetConnID, msg.pos.x, msg.pos.y, msg.pos.z);
-        SetCameraPos(msg.targetConnID, msg.camPos.x, msg.camPos.y, msg.camPos.z);
         if (msg.targetConnID == network.connID) { // teleport back in
             players[msg.targetConnID].gameObject.SetActive(true);
             portals.LeavingPortal(msg.portalIdx);
+        } else {
+            SetCameraPos(msg.targetConnID, msg.camPos.x, msg.camPos.y, msg.camPos.z);
         }
     }
     
