@@ -9,10 +9,14 @@ public class RoleSO : ScriptableObject {
     public class MoveSetting
     {
         public float speed;
-        public float jumpHeight;
         public float jumpForce;
     }
 
-    //[Header("move setting")]
     public MoveSetting moveSetting;
+
+
+    [Header("camera setting")]
+
+    public float verticleScrollThreshold = 0.6f;
+    public float horizontalScrollThreshold = 0.3f;
 }

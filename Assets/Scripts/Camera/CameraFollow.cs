@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
+
+    [SerializeField] RoleSO setting;
+
     public Transform target;
 
     float verticleScrollThreshold = 0.6f;
@@ -13,7 +16,11 @@ public class CameraFollow : MonoBehaviour {
         cam = GetComponent<Camera>();
     }
 
-    void Update() {
+    void Update()
+    {
+        this.verticleScrollThreshold = setting.verticleScrollThreshold;
+        this.horizontalScrollThreshold = setting.horizontalScrollThreshold;
+
         float hw = cam.orthographicSize * cam.aspect;
         float hh = cam.orthographicSize;
         Vector3 cur = transform.position;
