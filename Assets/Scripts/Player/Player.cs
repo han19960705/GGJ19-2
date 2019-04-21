@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public static Player Ins { get; private set; }
 
     public Animator animator;
-
+    Rigidbody2D rigidbody2;
     private void Awake()
     {
         if (Ins != null)
@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
         }
 
         Ins = this;
+
+        rigidbody2 = this.GetComponent<Rigidbody2D>();
     }
 
     // Start is called before the first frame update
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("Die");
             AudioManager.Ins.Play("die");
+            rigidbody2.Sleep();
             ////TODO : change game state to GAME OVER
             //GameManager.Ins.state = EGameState.GAMEOVER;
         }
@@ -52,5 +55,6 @@ public class Player : MonoBehaviour
     {
         animator.SetTrigger("Relive");
         this.transform.position = PlayerRecord.recordPos;
+        rigidbody2.WakeUp();
     }
 }
